@@ -1,0 +1,125 @@
+<% template menu %>
+<div class="mod" id="smeu">
+  <div><label><%=@ln.chfosi%></label><input type="range" min="77" max="200" value="<%=@ms.runtime.fontsize||100%>"/></div>
+  <ul class="gmu">
+    <!-- <li t="dialog|setting.bsls|<%=@ln.bsls%>|700px"><%=@ln.bsls%></li> -->
+    <li class="sp"><a href="mailto:mike.cyc@gmail.com" target="_blank"><%=@ln.feedback%></a></li>
+    <li t="dialog|setting.about|<%=@ln.aboutIt%>|500px" class="sp"><%=@ln.aboutIt%></li>
+    <!-- <li t="suggest"><%=@ln.suggest%></li>
+    <li t="help" class="sp"><%=@ln.help%></li> -->
+  </ul>
+</div>
+<%/template %>
+
+<% template bookmark %>
+<div class="mod" id="sbom">
+  <h3><%= @ln.bookmarked %></h3><em><%= @ln.del %></em>
+  <form>
+  <table class="gtb">
+    <tr><th><%= @ln.name %></th><td><input type="text" name="name"/></td></tr>
+    <tr><th><%= @ln.folder %></th><td><select name="fid"></select><input lab="<%=@ln.bookmarkFolder%>" class="hid" type="text" name="fname"/></td></tr>
+  </table>
+  <div class="ft"><input type="button" value="<%=@ln.newFolder%>"/> <input type="submit" value="<%= @ln.submit %>"/></div>
+  </form>
+</div>
+<%/template %>
+
+<% template markside %>
+<div class="mod glm" id="smal">
+  <div class="gnt"><%=@ln.nomarkbook%></div>
+  <div class="bd"></div>
+  <div class="po"><ul class="gmu">
+    <li t="modify"><%=@ln.modify%></li>
+    <li t="del"><%=@ln.del%></li>
+  </ul></div>
+</div>
+<%/template %>
+
+<% template lightside %>
+<div class="mod glm" id="shis">
+  <div class="gnt"><%=@ln.nohighlight%></div>
+  <div class="bd"></div>
+  <div class="po"><ul class="gmu">
+    <li t="modify"><%=@ln.modify%></li>
+    <li t="del"><%=@ln.del%></li>
+  </ul></div>
+</div>
+<%/template %>
+
+<% template noteside %>
+<div class="mod glm" id="snos">
+  <input type="search" results="2" placeholder="<%= @ln.searchkey %>"/>
+  <div class="hd"><em></em> <%= @ln.record %><input type="button" value="<%= @ln.add %>"/></div>
+  <div class="bd"></div>
+  <div class="po"><ul class="gmu">
+    <li t="rename"><%=@ln.rename%></li>
+    <li t="del"><%=@ln.del%></li>
+  </ul></div>
+</div>
+<%/template %>
+
+<% template newnote %>
+<div class="mod" id="snnt">
+  <h3><input type="text" name="tt" placeholder="<%= @ln.inTitle %>" lab="<%= @ln.ntitle %>"/><time></time></h3>
+  <div class="ghs"></div>
+  <div class="ghs"></div>
+  <section><textarea></textarea></section>
+  <div class="ft"><input type="submit" value="<%= @ln.save %>"/> <input type="button" t="sac" value="<%= @ln.savec %>"/> <input type="button" t="close" value="<%=@ln.close%>"/></div>
+</div>
+<%/template %>
+
+<% template bsls %>
+<div class="mod" id="bsls">
+  <ul class="gls">
+    <li class="on" t="setting.have"><%= @ln.have %></li>
+    <li t="setting.install"><%= @ln.install %></li>
+  </ul>
+  <div>
+    <div class="on"><%: setting.have %></div>
+  </div>
+</div>
+<%/template %>
+
+<% template have %>
+<div class="mod" id="have">
+  <div class="hd"><input type="button" t="top" value="<%= @ln.toTop %>"/> <input type="button" t="up" value="<%= @ln.up %>"/> <input type="button" t="down" value="<%= @ln.down %>"/> <input type="button" t="bottom" value="<%= @ln.toBottom %>"/> <input type="button" t="attr" value="<%= @ln.attr %>"/></div>
+  <dl class="gbl"></dl>
+  <div class="ft"><input type="button" value="<%= @ln.done %>"/></div>
+</div>
+<%/template %>
+
+<% template install %>
+<div class="mod" id="inst">
+  <div class="hd"><em><%= @ln.neednet %></em><select><option value=""><%=@ln.all%></option></select> <input type="button" t="attr" value="<%= @ln.attr %>"/></div>
+  <dl class="gbl ld"></dl>
+  <div class="ft"><input type="button" value="<%= @ln.done %>"/></div>
+</div>
+<%/template %>
+
+<% template startplan %>
+<div class="mod" id="stpl">
+  <form>
+  <table class="gtb">
+    <tr><th><%= @ln.planName %></th><td><strong></strong></td></tr>
+    <tr><th><%= @ln.stTime %></th><td><input class="tdt" type="text" name="num" vd="date"/></td></tr>
+    <tr><th></th><td><label><input type="checkbox" name="read" value="{}"/> <%= @ln.clrdata %></label></td></tr>
+  </table>
+  <div class="gfb"><input type="submit" value="<%= @ln.sure %>"/> <input type="button" t="close" value="<%= @ln.cancel %>"/></div>
+  </form>
+</div>
+<%/template %>
+
+<% template about %>
+<div class="mod" id="abot">
+  <div class="fix">
+    <img src="<%=@ms.imgpath%>ico64.png"/>
+    <table>
+      <tr><th><%=@ln.version%></th><td><%=@ms.version%></td></tr>
+      <tr><th><%=@ln.author%></th><td>Mike Chen</td></tr>
+      <tr><th><%=@ln.email%></th><td><a href="mailto:mike.cyc@gmail.com" target="_blank">mike.cyc@gmail.com</a></td></tr>
+    </table>
+  </div>
+  <h3><%=@ln.desc%></h3>
+  <p><%=@ln.dmore%></p>
+</div>
+<%/template %>

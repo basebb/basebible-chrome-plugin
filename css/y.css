@@ -1,0 +1,18 @@
+body{font:13px/1.231 'Microsoft YaHei',Verdana,Arial,\5b8b\4f53;*font-size:small;*font:x-small}select,input,button,textarea{font:99% 'Microsoft YaHei',Verdana,Arial,\5b8b\4f53}table{font-size:inherit;font:100%}pre,code,kbd,samp,tt{font-family:monospace;*font-size:108%;line-height:100%}
+html,body{width:100%;height:100%;-webkit-text-size-adjust:none;}
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td{margin:0;padding:0}table{border-collapse:collapse;border-spacing:0}fieldset,img{border:0}address,caption,cite,code,dfn,em,strong,th,var{font-style:normal;font-weight:normal}li{list-style:none}caption,th{text-align:left}h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal}q:before,q:after{content:''}abbr,acronym{border:0;font-variant:normal}sup{vertical-align:text-top}sub{vertical-align:text-bottom}input,textarea,select{font-family:inherit;font-size:inherit;font-weight:inherit}input,textarea,select{*font-size:100%}legend{color:#000}
+
+h1{font-size:138.5%}h2{font-size:123.1%}h3{font-size:108%}h1,h2,h3{margin:1em 0}h1,h2,h3,h4,h5,h6,strong,b{font-weight:bold}p{line-height:1.5}del{text-decoration:line-through}
+
+.yg{letter-spacing: -0.31em;*letter-spacing: normal;word-spacing:-0.43em}
+.yu{display:inline-block;zoom:1;*display:inline;letter-spacing:normal;word-spacing:normal;vertical-align:top}
+
+.fix{zoom:1}
+.fix:after{content:'.';display:block;visibility:hidden;clear:both;height:0;font-size:0}
+
+/* middle layout */
+.ym{width:100%;height:100%;margin:0 auto;overflow:hidden;position:relative;}
+.ym .yms{display:table;width:100%;height:100%;*position:absolute;*top:50%;*left:0;*height:auto;}
+.ym .yml{display:table-cell;vertical-align:middle;text-align:center;position:relative;*top:-50%;}
+
+

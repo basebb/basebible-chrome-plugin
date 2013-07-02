@@ -1,0 +1,22 @@
+﻿{
+  "name": "__MSG_name__",
+  "default_locale": "zh_CN",
+  "description": "__MSG_description__",
+  "version": "1.0",
+  "app": {
+    "launch": {
+      "local_path": "index.html"
+    }
+  },
+  "icons": {
+    "16": "img/ico16.png",
+    "64": "img/ico64.png",
+    "128": "img/ico128.png"
+  },
+  "permissions": [
+    "tabs",
+    "http://*/*",
+    "https://*/*",
+    "unlimitedStorage"
+  ]
+}
