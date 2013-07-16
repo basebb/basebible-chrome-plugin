@@ -1,0 +1,110 @@
+<% template index %>
+<header><%:main.menu%></header>
+<section>
+  <article><%:main.arti%></article>
+</section>
+<%:main.aside%>
+<%:main.setting%>
+<%:main.nst%>
+<%:main.gmsg%>
+<%/template %>
+
+<% template nst %>
+<div class="mod" id="nst"></div>
+<%/template %>
+
+<% template gmsg %>
+<div id="gmsg" class="mod">
+  <div class="hd"></div>
+  <div class="bd" title="{{=ln.clickhide}}"></div>
+  <div class="ft"></div>
+</div>
+<%/template %>
+
+<% template arti %>
+<div class="mod fix" id="arti">
+  <div><div></div></div>
+  <div class="hid"><div></div></div>
+  <em class="pr" title="{{=ln.prevChapter}}">&lt;</em>
+  <em class="nx" title="{{=ln.nextChapter}}">&gt;</em>
+</div>
+<%/template %>
+
+<% template menu %>
+<div class="mod" id="menu">
+  <div><em t="main.menub" class="sel b"></em> <em t="main.menur" class="sel r"></em> <em class="btn" t="vs">{{=ln.parallel}}</em><nav><em class="btn" t="main.highlight">{{=ln.select}}<b></b></em><em class="btn" t="cl" title="{{=ln.clear}}">X</em></nav></div>
+  <div class="hid"><em t="main.menub" class="sel b" i="2"></em> <em t="main.menur" class="sel r" i="2"></em> <em class="btn" t="ch" title="{{=ln.changeT}}">{{=ln.change}}</em></div>
+</div>
+<%/template %>
+
+<% template highlight %>
+<div class="mod" id="hili">
+  <h3>{{=ln.havesel}}</h3>
+  <div class="ghs fix"></div>
+  <h3>{{=ln.setLight}} <label title="{{=ln.glotitle}}"><input type="checkbox"/>{{=ln.global}}</label></h3>
+  <div class="bd fix">{{@ln.color.length}}<em class="gc{{=_key}}" title="{{=ln.color[i]}}" i="{{=_key}}"></em>{{/@ln.color.length}}</div>
+  <h3>{{=ln.selopt}}</h3>
+  <div class="ft"><input type="button" t="nn" value="{{=ln.newNote}}"/> <input type="button" t="dh" value="{{=ln.delhl}}"/> <input type="button" t="dgh" value="{{=ln.delghl}}"/></div>
+</div>
+<%/template %>
+
+<% template menur %>
+<div class="mod fix" id="brl"{{id}} i="{{=id}}"{{/id}}>
+  <div>{{=ln.book}}</div><div>{{=ln.chapter}}</div>
+  <dl></dl>
+  <ul></ul>
+</div>
+<%/template %>
+
+<% template menub %>
+<div class="mod" id="bbt"{{id}} i="{{=id}}"{{/id}}>
+  <dl></dl>
+</div>
+<%/template %>
+
+<% template search %>
+<div class="mod" id="seah">
+  {{!ms.bibles}}<p class="gnt">{{=ln.sform}}</p>{{/!ms.bibles}}
+  <form class="{{!ms.bibles}}hid{{/!ms.bibles}}">
+    <input type="search" name="q" results="10" placeholder="{{=ln.searchkey}}"/> <select><option value="1|66">{{=ln.all}}</option><option value="1|39">{{=ln.bold}}</option><option value="40|66">{{=ln.bnew}}</option></select> <input type="submit" value="{{=ln.submit}}"/>
+  </form>
+  <div></div>
+</div>
+<%/template %>
+
+<% template mark %>
+<div class="mod" id="mak">
+  <ul class="gmt"><li t="setting.markside">{{=ln.bookmark}}</li><li t="setting.lightside">{{=ln.highlight}}</li><li t="setting.noteside">{{=ln.note}}</li></ul>
+  <div class="tc"></div>
+</div>
+<%/template %>
+
+<% template plan %>
+<div class="mod glm" id="pla">
+  <input type="button" value="{{=ln.add}}"/>
+  <div class="bd"></div>
+  <div class="po"><ul class="gmu">
+    <li t="replan" cm="dialog|setting.startplan|{{=ln.setplan}}|300px">{{=ln.replan}}</li>
+    <li t="del">{{=ln.del}}</li>
+    <li t="about">{{=ln.about}}</li>
+  </ul></div>
+</div>
+<%/template %>
+
+<% template aside %>
+<div class="mod" id="sid">
+  <div class="hd"><ul class="gls">
+    <li t="main.search">{{=ln.search}}</li>
+    <li t="main.mark">{{=ln.mark}}</li>
+    <!-- <li t="main.plan">{{=ln.plan}}</li>-->
+  </ul><em class="ibt" title="{{=ms.runtime.side ? @ln.fold: @ln.unfold %>"></em></div>
+  <aside></aside>
+</div>
+<%/template %>
+
+<% template setting %>
+<div class="mod" id="set">
+  <em class="ibt bm" title="{{=ln.bookmarkAdd}}" t="setting.bookmark"></em>
+  <em class="ibt" title="{{=ln.setting}}" t="setting.menu"></em>
+</div>
+<%/template %>

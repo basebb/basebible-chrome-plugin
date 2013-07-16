@@ -1,4 +1,5 @@
 ﻿{
+  "manifest_version": 2,
   "name": "__MSG_name__",
   "default_locale": "zh_CN",
   "description": "__MSG_description__",

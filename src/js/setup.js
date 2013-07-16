@@ -31,6 +31,7 @@ $.cm.setup = function(){
     //初始化默认面板语言填充数据
     ms.htmlData = {ln: $.ln.cm, ms: ms};
     
+    
     // 初始始化数据库
     // 检查数据库是否有数据，如果没有数据加载数据到数据库
     if(!ms.bibles){

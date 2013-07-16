@@ -1,18 +1,21 @@
-/*global jQuery:false, $:false, window:false, eval: false*/
-/*jslint evil: true */
+/*global jQuery:false, $:false, window:false, t:false*/
 /**
  * jQuery ejs(embedded javascript snippet,嵌入式javascript代码片断)
  * 轻量级的JS模板，尽量提高运行效率和减少代码的大小
  * 感谢：http://www.cnblogs.com/rubylouvre/archive/2011/03/03/1969718.html
  *
- * Copyright (c) 2011 Mike Chen (mike.cyc@gmail.com)
+ * Copyright (c) 2011-2013 Mike Chen (mike.cyc@gmail.com)
  *
  *
  *
- * @version 1.0.5
+ * @version 2.0.0
  * @author Mike Chen
  * @mailto mike.cyc@gmail.com
  * @modify Mike Chen (mike.cyc@gmail.com)
+ **/
+ 
+/**
+ * 依赖t.js, https://github.com/jasonmoo/t.js
  **/
 
 /**
@@ -23,6 +26,7 @@
  * 1.0.3 [2012-03-22] 增加模板加载队列的功能，为了避免同时Ajax请求
  * 1.0.4 [2012-03-23] 增加队列运行时间限制，避免上一个运行失败后面的都没有办法运行的问题
  * 1.0.5 [2012-05-02] 解决分割符侧边的空白被删除的问题
+ * 2.0.0 [2013-07-16] 从安全方面考虑，为了避免用eval这个函数，采用了第三方模板解释t.js
  **/
  
 /**
@@ -32,56 +36,37 @@
 */
 
 /**
-<% JS逻辑 %>	 <% for(var i=0,tl = @trs.length,tr;i < tl;i++){ %>
-<%= JS输出内容 %>	 <%= tr.name %>
 <%# 这是注释 %>	 <%# 导入子模板 %>
-<%: CSS选择符 %>	 <%: tds_tmpl %>
+<%: CSS选择符 %>	 <%: tds_tmpl %>，如果.开头表示继承当前的命名空间
 */
 
 /** 应用举例
 模板
 <% template text %>
-  <div><%= @name %></div>Hello 1
-  <p>sdfs</p>
-  <%: main.text2 %>
+  <div>{{=name}}</div>Hello 1
+  <p>测试</p>
+  <%: .text2 %>
 <%/template %>
 
 <% template text2 %>
-  <div><%= @id %></div>Hello 2
+  <div>{{=id}}</div>Hello 2
 <%/template %>
 
 调用方式
-$.ejs({name: 'main.text', data:{name: 'Hello world', id: '中文'}, back: function(x){
+$.ejs({name: 'test.text', data:{name: 'Hello world', id: '中文'}, back: function(x){
     console.log(x);
 }});
 
 输出
 <div>Hello world</div>Hello 1
-  <p>sdfs</p>
+  <p>测试</p>
 <div>中文</div>Hello 2
 */
 
 (function ($) {
 //定义一些针对这个插件的全局变量
-var mo = {
-    '\b' : '\\b',
-    '\t' : '\\t',
-    '\n' : '\\n',
-    '\f' : '\\f',
-    '\r' : '\\r',
-    '\\' : '\\\\'
-},
-quote = String.quote || function (str) {
-    str = str.replace(/[\x00-\x1f\\]/g, function (chr) {
-        return mo[chr] || '\\u' + ('0000' + chr.charCodeAt(0).toString(16)).slice(-4);
-    });
-    return '"' + str.replace(/"/g, '\\"') + '"';
-},
-sh = "__v.push(",
-eh = ");",
-at = /(^|[^\w\u00c0-\uFFFF_])(@)(?=\w)/g,
 
-axl = 0,
+var axl = 0,
 queue = [], //队列
 dequeue = function(){
     if(!axl){
@@ -97,7 +82,7 @@ tps = {}, //原始模板文件或者缓存生成的Template
 /*
 tpl: '', //template string, 如果没有的话到服务器加载
 */
-st = {
+st = {//在版本2.0之后，因用了第三方的模板t.js，left和right只是匹配加载分割模板，生成HTML用t.js默认的{{和}}
     left : "<%",//左边匹配符
     right : "%>",//右边匹配符
     path: '/tpl/',//服务器加载模板路径
@@ -126,11 +111,14 @@ $.ejsTpl = function(n, v){
 
 $.ejs = function (s) {
     s = $.extend({}, st, s);
+    if(!s.cache){
+        delete(tps[s.name]);
+    }
     if(s.tpl && !(tps[s.name] && s.cache)){
         tps[s.name] = s.tpl;
     }
     
-    var rl = new RegExp(s.left+"[ \\t]*"),
+    var rl = new RegExp(s.left+"[ \\t]*"),//得到指定的分隔符正则表达式
     rr = new RegExp("[ \\t]*"+ s.right),
     
     gtp = function(n, b){//得到服务器模板
@@ -153,7 +141,7 @@ $.ejs = function (s) {
                 bf.push(x.join(''));
                 //处理静态HTML片断
                 if(el[1]){
-                    bf.push(sh, quote(el[1]), eh);
+                    bf.push(el[1]);
                 }
                 et();//再继续解释模板
             };
@@ -168,27 +156,26 @@ $.ejs = function (s) {
                 el = sm.split(rr);
                 if(el.length>1 || -1 !== sm.indexOf(rr)){//避开IE的split bug
                     switch(el[0].charAt(0)){
-                        case '='://处理后台返回的变量（输出到页面的)
-                        lg = el[0].substr(1);
-                        bf.push(sh, -1 !== lg.indexOf('@') ? lg.replace(at, "$1data."): lg, eh);
-                        break;
+                        // case '='://处理后台返回的变量（输出到页面的)
+                        // lg = el[0].substr(1);
+                        // bf.push(sh, -1 !== lg.indexOf('@') ? lg.replace(at, "$1data."): lg, eh);
+                        // break;
                         case ':': //处理插入新的代码片段，相当于插入还没有解释的模板代码
-                        lg = el[0].substr(1);
-                        dtp($.trim(lg), nt);
+                        lg = $.trim(el[0].substr(1));
+                        dtp(0 === lg.indexOf('.') ? name.split('.', 1)[0]+lg: lg, nt);//判断是否有前缀.
                         return;//在这里产生断点
                         case '#'://处理注释
                         break;
-                        default://处理逻辑
-                        lg = el[0];
-                        bf.push(-1 !== lg.indexOf('@')? lg.replace(at, "$1data."): lg);
+                        default:
+                        bf.push(el[0]);
                     }
                     //处理静态HTML片断
                     if(el[1]){
-                        bf.push(sh, quote(el[1]), eh);
+                        bf.push(el[1]);
                     }
                 }else{
                     //处理静态HTML片断
-                    bf.push(sh, quote(el[0]), eh);
+                    bf.push(el[0]);
                 }
             }
             tps[name] = bf;
@@ -212,28 +199,15 @@ $.ejs = function (s) {
             axl = 0;
             dequeue();
         }, 5000);
-        if($.isFunction(tps[s.name])){
-            setTimeout(function(){
-                s.back(tps[s.name](s.data));
-                if(axl){
-                    clearTimeout(axl);
-                    axl = 0;
-                }
-                dequeue();
-            }, 0);
-        }else{
-            dtp(s.name, function(x){//返回的是数组
-                x.unshift('var __v=[];');
-                x.push('return __v.join("");');
-                tps[s.name] = new Function('data', tps[s.name].join(''));
-                s.back(tps[s.name](s.data));
-                if(axl){
-                    clearTimeout(axl);
-                    axl = 0;
-                }
-                dequeue();
-            });
-        }
+        dtp(s.name, function(x){//返回的是数组
+            var tpl = new t(x.join(''));
+            s.back(tpl.render(s.data));
+            if(axl){
+                clearTimeout(axl);
+                axl = 0;
+            }
+            dequeue();
+        });
     });
     dequeue();
 };

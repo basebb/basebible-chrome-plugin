@@ -16,19 +16,19 @@ $.ajaxSetup({
 });
 
 $.ajax({//加载语言包，为了方便调用，采用这种方式是为了代码缓存
-    url: '_locales/'+ ms.local +'/ln.js',
+    url: '_locales/'+ ms.local +'/ln.json',
     cache: true,
-    dataType: 'script',
-    success: function(){
+    dataType: 'json',
+    success: function(x){
+        $.extend($.ln, x);
         cm.setup();//运行初始化
         $.ejs({name: 'main.index', data:ms.htmlData, back: function(x){
             cm.bjs($.ss.lay.html(x));
         }});
         
-        //test
-        // $.ejs({name: 'setting.install', data:ms.htmlData, back: function(x){
-            // $.dialog({html:x, title:$.ln.cm.install, width:'700px'});
-        // }});
+    },
+    error: function(){
+        alert('Request language source Fail.');
     }
 });
 
