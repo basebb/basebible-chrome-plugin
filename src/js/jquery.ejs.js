@@ -156,10 +156,6 @@ $.ejs = function (s) {
                 el = sm.split(rr);
                 if(el.length>1 || -1 !== sm.indexOf(rr)){//避开IE的split bug
                     switch(el[0].charAt(0)){
-                        // case '='://处理后台返回的变量（输出到页面的)
-                        // lg = el[0].substr(1);
-                        // bf.push(sh, -1 !== lg.indexOf('@') ? lg.replace(at, "$1data."): lg, eh);
-                        // break;
                         case ':': //处理插入新的代码片段，相当于插入还没有解释的模板代码
                         lg = $.trim(el[0].substr(1));
                         dtp(0 === lg.indexOf('.') ? name.split('.', 1)[0]+lg: lg, nt);//判断是否有前缀.
